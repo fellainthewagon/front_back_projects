@@ -1,0 +1,89 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(45deg, #6a85b6, #bac8e0);
+}
+
+h1 {
+  margin: 10px;
+  font-size: 3rem;
+  letter-spacing: 5px;
+  color: #eef1f5;
+}
+
+.carousel {
+  position: relative;
+  width: 980px;
+  padding: 20px 60px;
+  border-radius: 20px;
+  background: #eef1f5;
+}
+
+.carousel img {
+  width: 860px;
+  height: 640px;
+  display: block;
+}
+
+.arrow {
+  position: absolute;
+  top: calc(50% - 18px);
+  padding: 5px;
+  background: #eee;
+  font-size: 30px;
+  line-height: 36px;
+  color: rgb(87, 87, 87);
+  border: 1px solid rgb(110, 110, 110);
+  border-radius: 10px;
+  display: block;
+}
+
+.arrow:hover {
+  background: rgb(212, 212, 212);
+  cursor: pointer;
+}
+
+.arrow:focus {
+  outline: none;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+.gallery {
+  width: 860px;
+  overflow: hidden;
+}
+
+.gallery ul {
+  height: 640px;
+  width: 9999px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0;
+  transition: transform 1s;
+}
+
+.gallery li {
+  display: inline-block;
+}
