@@ -1,0 +1,142 @@
+const menu = [
+  {
+    id: 1,
+    title: "buttermilk pancakes",
+    category: "breakfast",
+    price: 15.99,
+    img: "./images/item-1.jpeg",
+    desc: `I'm baby woke mlkshk wolf bitters live-edge blue bottle, hammock freegan copper mug whatever cold-pressed `,
+  },
+  {
+    id: 2,
+    title: "diner double",
+    category: "lunch",
+    price: 13.99,
+    img: "./images/item-2.jpeg",
+    desc: `vaporware iPhone mumblecore selvage raw denim slow-carb leggings gochujang helvetica man braid jianbing. Marfa thundercats `,
+  },
+  {
+    id: 3,
+    title: "godzilla milkshake",
+    category: "shakes",
+    price: 6.99,
+    img: "./images/item-3.jpeg",
+    desc: `ombucha chillwave fanny pack 3 wolf moon street art photo booth before they sold out organic viral.`,
+  },
+  {
+    id: 4,
+    title: "country delight",
+    category: "breakfast",
+    price: 20.99,
+    img: "./images/item-4.jpeg",
+    desc: `Shabby chic keffiyeh neutra snackwave pork belly shoreditch. Prism austin mlkshk truffaut, `,
+  },
+  {
+    id: 5,
+    title: "egg attack",
+    category: "lunch",
+    price: 22.99,
+    img: "./images/item-5.jpeg",
+    desc: `franzen vegan pabst bicycle rights kickstarter pinterest meditation farm-to-table 90's pop-up `,
+  },
+  {
+    id: 6,
+    title: "oreo dream",
+    category: "shakes",
+    price: 18.99,
+    img: "./images/item-6.jpeg",
+    desc: `Portland chicharrones ethical edison bulb, palo santo craft beer chia heirloom iPhone everyday`,
+  },
+  {
+    id: 7,
+    title: "bacon overflow",
+    category: "breakfast",
+    price: 8.99,
+    img: "./images/item-7.jpeg",
+    desc: `carry jianbing normcore freegan. Viral single-origin coffee live-edge, pork belly cloud bread iceland put a bird `,
+  },
+  {
+    id: 8,
+    title: "american classic",
+    category: "lunch",
+    price: 12.99,
+    img: "./images/item-8.jpeg",
+    desc: `on it tumblr kickstarter thundercats migas everyday carry squid palo santo leggings. Food truck truffaut  `,
+  },
+  {
+    id: 9,
+    title: "quarantine buddy",
+    category: "shakes",
+    price: 16.99,
+    img: "./images/item-9.jpeg",
+    desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
+  },
+  {
+    id: 10,
+    title: "steak dinner",
+    category: "dinner",
+    price: 36.99,
+    img: "./images/item-10.jpeg",
+    desc: `on it tumblr kickstarter thundercats migas. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
+  },
+];
+
+/* DOMContentLoad */
+window.addEventListener("DOMContentLoaded", () => {
+  contentCardLoader(menu);
+  btnsLoader();
+});
+
+/* vars */
+const section = document.querySelector(".section-center");
+const btnContainer = document.querySelector(".btn-container");
+
+/* funcs */
+function contentCardLoader(arr) {
+  section.innerHTML = null;
+
+  for (let i of arr) {
+    const item = document.createElement("article");
+    item.classList.add("menu-item");
+    item.innerHTML = `
+      <img src="${i.img}" class="photo" alt="menu-item" />
+      <div class="item-info">
+        <header>
+          <h4>${i.title}</h4>
+          <h4 class="price">${i.price}</h4>
+        </header>
+        <p class="item-text">${i.desc}</p>
+      </div>
+    `;
+    section.append(item);
+  }
+  /* maybe better create all of `this template` & push them to [],
+  then make [].join & put it to section.innerHTML */
+}
+
+function btnsLoader() {
+  /* filter (reduce) for categories of item-menu, then (map) add btns to HTML */
+  menu
+    .reduce(
+      (array, card) => (
+        !array.includes(card.category) ? array.push(card.category) : 0, array
+      ),
+      ["all"]
+    )
+    .map(
+      (category) =>
+        (btnContainer.innerHTML += `
+          <button type="button" class="filter-btn" data-id="${category}">${category}</button>
+      `)
+    );
+}
+
+/* events */
+btnContainer.addEventListener("click", (e) => {
+  if (e.target.tagName !== "BUTTON") return;
+
+  const searchBtn = e.target.dataset.id;
+  searchBtn === "all"
+    ? contentCardLoader(menu)
+    : contentCardLoader(menu.filter((card) => card.category === searchBtn));
+});
