@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const Author = require("../models/author");
 
-/* all authors route */
+/* Show ALL "{}" or searching AUTHOR "{ name: /bo/i }" */
 router.get("/", async (req, res) => {
   let searchOptions = {};
 
-  if (req.query.name != null && req.query.name != "") {
+  if (req.query.name) {
     searchOptions.name = new RegExp(req.query.name, "i");
     // console.log(searchOptions); --> /* { name: /bo/i } */
   }
@@ -23,12 +23,12 @@ router.get("/", async (req, res) => {
   }
 });
 
-/* new authors route */
+/* RENDER NEW AUTHOR page */
 router.get("/new", (req, res) => {
   res.render("authors/new", { author: new Author() });
 });
 
-/* create autor route, after submit form opened page "..3000/autors" */
+/* CREATE AUTHOR: SUBMIT -> SHOW page with ALL authors */
 router.post("/", async (req, res) => {
   const author = new Author({
     name: req.body.name,
@@ -43,6 +43,28 @@ router.post("/", async (req, res) => {
       errorMessage: "Error creating Author...",
     });
   }
+});
+
+router.get("/:id", (req, res) => {
+  res.send("Show Author " + req.params.id);
+});
+
+/* RENDER EDIT-page. AFTER edit, click SUBMIT = PUT-method */
+router.get("/:id/edit", async (req, res) => {
+  try {
+    const author = await Author.findById(req.params.id);
+    res.render("authors/edit", { author });
+  } catch (error) {
+    res.redirect("/authors");
+  }
+});
+
+router.put("/:id", (req, res) => {
+  res.send("Update Author " + req.params.id);
+});
+
+router.delete("/:id", (req, res) => {
+  res.send("Delete Author " + req.params.id);
 });
 
 module.exports = router;
